@@ -1,32 +1,38 @@
 export default `{
-  "name": "Westend Asset Hub",
-  "id": "asset-hub-westend",
+  "name": "Polkadot Asset Hub",
+  "id": "asset-hub-polkadot",
   "chainType": "Live",
   "bootNodes": [
-    "/dns/westend-asset-hub-bootnode-0.polkadot.io/tcp/30333/p2p/12D3KooWJaAfPyiye7ZQBuHengTJJoMrcaz7Jj1UzHiKdNxA1Nkd",
-    "/dns/westend-asset-hub-bootnode-1.polkadot.io/tcp/30333/p2p/12D3KooWGL3hpWycWyeqyL9gHNnmmsL474WkPZdqraBHu4L6fQrW",
-    "/dns/boot.stake.plus/tcp/33333/p2p/12D3KooWNiB27rpXX7EYongoWWUeRKzLQxWGms6MQU2B9LX7Ztzo",
-    "/dns/boot.stake.plus/tcp/33334/wss/p2p/12D3KooWNiB27rpXX7EYongoWWUeRKzLQxWGms6MQU2B9LX7Ztzo",
-    "/dns/boot.metaspan.io/tcp/36052/p2p/12D3KooWBCqfNb6Y39DXTr4UBWXyjuS3hcZM1qTbHhDXxF6HkAJJ",
-    "/dns/boot.metaspan.io/tcp/36056/wss/p2p/12D3KooWBCqfNb6Y39DXTr4UBWXyjuS3hcZM1qTbHhDXxF6HkAJJ",
-    "/dns/boot-cr.gatotech.network/tcp/33310/p2p/12D3KooWMSW6hr8KcNBhGFN1bg8kYC76o67PnuDEbxRhxacW6dui",
-    "/dns/boot-cr.gatotech.network/tcp/35310/wss/p2p/12D3KooWMSW6hr8KcNBhGFN1bg8kYC76o67PnuDEbxRhxacW6dui",
-    "/dns/westmint-bootnode.turboflakes.io/tcp/30325/p2p/12D3KooWHU4qqSyqKdbXdrCTMXUJxxueaZjqpqSaQqYiFPw6XqEx",
-    "/dns/boot-node.helikon.io/tcp/10200/p2p/12D3KooWMRY8wb7rMT81LLuivvsy6ahUxKHQgYJw4zm1hC1uYLxb",
-    "/dns/boot-node.helikon.io/tcp/10202/wss/p2p/12D3KooWMRY8wb7rMT81LLuivvsy6ahUxKHQgYJw4zm1hC1uYLxb",
-    "/dns/westmint.bootnode.amforc.com/tcp/30339/p2p/12D3KooWNjKeaANaeZxBAPctmx8jugSYzuw4vnSCJmEDPB5mtRd6",
-    "/dns/westmint.bootnode.amforc.com/tcp/30333/wss/p2p/12D3KooWNjKeaANaeZxBAPctmx8jugSYzuw4vnSCJmEDPB5mtRd6",
-    "/dns/westmint-boot-ng.dwellir.com/tcp/30345/p2p/12D3KooWFZ9xqApB1wnFYkbe1qJ5Jqwxe2f3i8W25F3tKNXy59ux",
-    "/dns/westmint-boot-ng.dwellir.com/tcp/443/wss/p2p/12D3KooWFZ9xqApB1wnFYkbe1qJ5Jqwxe2f3i8W25F3tKNXy59ux"
+    "/dns/polkadot-asset-hub-connect-0.polkadot.io/tcp/30334/p2p/12D3KooWLHqbcQtoBygf7GJgVjVa3TaeLuf7VbicNdooaCmQM2JZ",
+    "/dns/polkadot-asset-hub-connect-0.polkadot.io/tcp/443/wss/p2p/12D3KooWLHqbcQtoBygf7GJgVjVa3TaeLuf7VbicNdooaCmQM2JZ",
+    "/dns/polkadot-asset-hub-connect-1.polkadot.io/tcp/30334/p2p/12D3KooWNDrKSayoZXGGE2dRSFW2g1iGPq3fTZE2U39ma9yZGKd3",
+    "/dns/polkadot-asset-hub-connect-1.polkadot.io/tcp/443/wss/p2p/12D3KooWNDrKSayoZXGGE2dRSFW2g1iGPq3fTZE2U39ma9yZGKd3",
+    "/dns/boot.stake.plus/tcp/35333/p2p/12D3KooWFrQjYaPZSSLLxEVmoaHFcrF6VoY4awG4KRSLaqy3JCdQ",
+    "/dns/boot.stake.plus/tcp/35334/wss/p2p/12D3KooWFrQjYaPZSSLLxEVmoaHFcrF6VoY4awG4KRSLaqy3JCdQ",
+    "/dns/boot.metaspan.io/tcp/16052/p2p/12D3KooWLwiJuvqQUB4kYaSjLenFKH9dWZhGZ4qi7pSb3sUYU651",
+    "/dns/boot.metaspan.io/tcp/16056/wss/p2p/12D3KooWLwiJuvqQUB4kYaSjLenFKH9dWZhGZ4qi7pSb3sUYU651",
+    "/dns/boot-cr.gatotech.network/tcp/33110/p2p/12D3KooWKgwQfAeDoJARdtxFNNWfbYmcu6s4yUuSifnNoDgzHZgm",
+    "/dns/boot-cr.gatotech.network/tcp/35110/wss/p2p/12D3KooWKgwQfAeDoJARdtxFNNWfbYmcu6s4yUuSifnNoDgzHZgm",
+    "/dns/statemint-bootnode.turboflakes.io/tcp/30315/p2p/12D3KooWL8CyLww3m3pRySQGGYGNJhWDMqko3j5xi67ckP7hDUvo",
+    "/dns/boot-node.helikon.io/tcp/10220/p2p/12D3KooW9uybhguhDjVJc3U3kgZC3i8rWmAnSpbnJkmuR7C6ZsRW",
+    "/dns/boot-node.helikon.io/tcp/10222/wss/p2p/12D3KooW9uybhguhDjVJc3U3kgZC3i8rWmAnSpbnJkmuR7C6ZsRW",
+    "/dns/statemint.bootnode.amforc.com/tcp/30341/p2p/12D3KooWByohP9FXn7ao8syS167qJsbFdpa7fY2Y24xbKtt3r7Ls",
+    "/dns/statemint.bootnode.amforc.com/tcp/30333/wss/p2p/12D3KooWByohP9FXn7ao8syS167qJsbFdpa7fY2Y24xbKtt3r7Ls",
+    "/dns/statemint-boot-ng.dwellir.com/tcp/30344/p2p/12D3KooWEFrNuNk8fPdQS2hf34Gmqi6dGSvrETshGJUrqrvfRDZr",
+    "/dns/statemint-boot-ng.dwellir.com/tcp/443/wss/p2p/12D3KooWEFrNuNk8fPdQS2hf34Gmqi6dGSvrETshGJUrqrvfRDZr",
+    "/dns/statemint-bootnode.radiumblock.com/tcp/30336/wss/p2p/12D3KooWLKxHom7f3XawRJqrF8RwiKK5Sj3qZqz5c7hF6eJeXhTx",
+    "/dns/statemint-bootnode.radiumblock.com/tcp/30333/p2p/12D3KooWLKxHom7f3XawRJqrF8RwiKK5Sj3qZqz5c7hF6eJeXhTx"
   ],
-  "relay_chain": "westend2",
   "properties": {
-    "tokenDecimals": 12,
-    "tokenSymbol": "WND"
+    "ss58Format": 0,
+    "tokenDecimals": 10,
+    "tokenSymbol": "DOT"
   },
+  "relay_chain": "polkadot",
   "para_id": 1000,
   "consensusEngine": null,
+  "codeSubstitutes": {},
   "genesis": {
-    "stateRootHash": "0x1d0ce8ef6a9eef1685c4715925cf91ed1af635a752eac4f9945b1a1a4e2b6e51"
+    "stateRootHash": "0xc1ef26b567de07159e4ecd415fbbb0340c56a09c4d72c82516d0f3bc2b782c80"
   }
-}`
+}`;

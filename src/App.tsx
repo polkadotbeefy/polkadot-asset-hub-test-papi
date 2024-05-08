@@ -13,12 +13,12 @@ import assetHubTypes, {
 } from "./codegen/assetHub"
 import assetHubChainspec from "./asset-hub"
 
-const ASSET_ID = 8
+const ASSET_ID = 420
 
 const scProvider = createScClient()
 const { relayChains, connectAccounts } = getLegacyProvider(scProvider)
 
-const assetHub = await relayChains.westend2.getParachain(assetHubChainspec)
+const assetHub = await relayChains.polkadot.getParachain(assetHubChainspec)
 const client = createClient(assetHub.connect, { assets: assetHubTypes })
 
 const ExtensionSelector: React.FC = () => {
@@ -123,13 +123,13 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
     <>
       <div>
         <label>
-          WND Free Balance:{" "}
+          DOT Free Balance:{" "}
           {wndFreeBalance === null ? "Loading..." : wndFreeBalance.toString()}
         </label>
       </div>
       <div>
         <label>
-          JOE Balance:{" "}
+          BEEFY Balance:{" "}
           {joeBalance === null ? "Loading..." : joeBalance.toString()}
         </label>
       </div>
