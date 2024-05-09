@@ -1,46 +1,53 @@
-import { createClient } from "@polkadot-api/client"
-import {
-  Account,
-  getInjectedExtensions,
-  getLegacyProvider,
-} from "@polkadot-api/legacy-polkadot-provider"
-import { createScClient } from "@substrate/connect"
+import { start } from "polkadot-api/smoldot"
+import { chainSpec as polkadotChainspec } from "polkadot-api/chains/polkadot"
+import { chainSpec as ahChainspec } from "polkadot-api/chains/polkadot_asset_hub"
+import { getSmProvider } from "polkadot-api/sm-provider"
+import { createClient } from "polkadot-api"
+import { MultiAddress, assetHub } from "@polkadot-api/descriptors"
 import React, { useEffect, useState } from "react"
-import assetHubTypes, {
-  MultiAddress,
-  XcmV3Junctions,
-  XcmV3Junction,
-} from "./codegen/assetHub"
-import assetHubChainspec from "./asset-hub"
+import { InjectedPolkadotAccount, connectInjectedExtension, getInjectedExtensions } from "polkadot-api/pjs-signer"
 
-// 420 => $BEEFY
 const ASSET_ID = 420
 
-const scProvider = createScClient()
-const { relayChains, connectAccounts } = getLegacyProvider(scProvider)
+const smoldot = start()
 
-const assetHub = await relayChains.polkadot.getParachain(assetHubChainspec)
-const client = createClient(assetHub.connect, { assets: assetHubTypes })
+const polkadot = await smoldot.addChain({
+  chainSpec: polkadotChainspec,
+  disableJsonRpc: true,
+})
+
+const acalaChain = smoldot.addChain({
+  chainSpec: ahChainspec,
+  potentialRelayChains: [polkadot],
+})
+
+const client = createClient(getSmProvider(acalaChain))
+const api = client.getTypedApi(assetHub)
 
 const ExtensionSelector: React.FC = () => {
   const [availableExtensions, setAvailableExtensions] = useState<string[]>([])
   const [selectedExtension, setSelectedExtension] = useState<string | null>(
     null,
   )
-  const [accounts, setAccounts] = useState<Array<Account>>([])
+  const [accounts, setAccounts] = useState<Array<InjectedPolkadotAccount>>([])
+
+  
 
   useEffect(() => {
-    getInjectedExtensions().then((newExtensions) => {
+    const newExtensions = getInjectedExtensions() || [];
       setAvailableExtensions(newExtensions)
       setSelectedExtension(newExtensions[0] ?? null)
-    })
   }, [])
 
   useEffect(() => {
-    connectAccounts(selectedExtension)
+    if (selectedExtension) {
+      const fetchAccounts = async () => {
+        const wallet = await connectInjectedExtension(selectedExtension)
+        setAccounts(wallet.getAccounts())
+      }
+      fetchAccounts()
+    }
   }, [selectedExtension])
-
-  useEffect(() => assetHub.onAccountsChange(setAccounts), [])
 
   if (!availableExtensions.length)
     return <div>No Account Providers detected</div>
@@ -71,7 +78,7 @@ const ExtensionSelector: React.FC = () => {
   )
 }
 
-const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
+const App: React.FC<{ accounts: InjectedPolkadotAccount[] }> = ({ accounts }) => {
   const [account, setAccount] = useState(accounts[0])
   const [joeBalance, setJoeBalance] = useState<bigint | null>(null)
   const [wndFreeBalance, setWndFreeBalance] = useState<bigint | null>(null)
@@ -81,7 +88,7 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
   const [amount, setAmount] = useState("")
   useEffect(() => {
     setJoeBalance(null)
-    const subscription = client.assets.query.Assets.Account.watchValue(
+    const subscription = api.query.Assets.Account.watchValue(
       ASSET_ID,
       account.address,
     ).subscribe((assetAccount) => {
@@ -90,7 +97,7 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
 
     setWndFreeBalance(null)
     subscription.add(
-      client.assets.query.System.Account.watchValue(account.address).subscribe(
+      api.query.System.Account.watchValue(account.address).subscribe(
         (account) => {
           setWndFreeBalance(account.data.free ?? 0n)
         },
@@ -103,13 +110,13 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
   }, [account])
 
   const handleTransact = () => {
-    client.assets.tx.Assets.transfer_keep_alive({
+    api.tx.Assets.transfer_keep_alive({
       id: ASSET_ID,
       amount: BigInt(amount),
       target: MultiAddress.Id(recipientAddress),
     })
-      .submit$(account.address)
-      .subscribe({ next: console.log, error: console.error })
+      .signAndSubmit(account.polkadotSigner)
+      .then(console.log)
   }
 
   return (
