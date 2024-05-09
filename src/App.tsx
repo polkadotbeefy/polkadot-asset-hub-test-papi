@@ -13,6 +13,7 @@ import assetHubTypes, {
 } from "./codegen/assetHub"
 import assetHubChainspec from "./asset-hub"
 
+// 420 => $BEEFY
 const ASSET_ID = 420
 
 const scProvider = createScClient()
@@ -107,15 +108,7 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
       amount: BigInt(amount),
       target: MultiAddress.Id(recipientAddress),
     })
-      .submit$(account.address, {
-        asset: {
-          parents: 0,
-          interior: XcmV3Junctions.X2([
-            XcmV3Junction.PalletInstance(50),
-            XcmV3Junction.GeneralIndex(BigInt(ASSET_ID)),
-          ]),
-        },
-      })
+      .submit$(account.address)
       .subscribe({ next: console.log, error: console.error })
   }
 
