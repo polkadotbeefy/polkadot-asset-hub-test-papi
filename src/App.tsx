@@ -16,12 +16,12 @@ const polkadot = await smoldot.addChain({
   disableJsonRpc: true,
 })
 
-const acalaChain = smoldot.addChain({
+const assethubChain = smoldot.addChain({
   chainSpec: ahChainspec,
   potentialRelayChains: [polkadot],
 })
 
-const client = createClient(getSmProvider(acalaChain))
+const client = createClient(getSmProvider(assethubChain))
 const api = client.getTypedApi(assetHub)
 
 const ExtensionSelector: React.FC = () => {
