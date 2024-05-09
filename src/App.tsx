@@ -78,6 +78,11 @@ const ExtensionSelector: React.FC = () => {
   )
 }
 
+interface Receiver {
+  address: string;
+  amount: string;
+}
+
 const App: React.FC<{ accounts: InjectedPolkadotAccount[] }> = ({ accounts }) => {
   const [account, setAccount] = useState(accounts[0])
   const [joeBalance, setJoeBalance] = useState<bigint | null>(null)
@@ -86,6 +91,8 @@ const App: React.FC<{ accounts: InjectedPolkadotAccount[] }> = ({ accounts }) =>
     "5ELXt7N4gPpN4d1E5c4wKyYhZFCaSDiH5zUxuWsgY4SNrPW5",
   )
   const [amount, setAmount] = useState("")
+  const [receivers, setReceivers] = useState<Receiver[]>([])
+
   useEffect(() => {
     setJoeBalance(null)
     const subscription = api.query.Assets.Account.watchValue(
@@ -109,13 +116,26 @@ const App: React.FC<{ accounts: InjectedPolkadotAccount[] }> = ({ accounts }) =>
     }
   }, [account])
 
+  const addReceiver = () => {
+    setReceivers((prev) => [
+      ...prev,
+      { address: recipientAddress, amount }
+    ])
+    setRecipientAddress("")
+    setAmount("")
+  }
+
   const handleTransact = () => {
-    api.tx.Assets.transfer_keep_alive({
-      id: ASSET_ID,
-      amount: BigInt(amount),
-      target: MultiAddress.Id(recipientAddress),
-    })
-      .signAndSubmit(account.polkadotSigner)
+    const transfers = receivers.map(({ address, amount }) =>
+      api.tx.Assets.transfer_keep_alive({
+        id: ASSET_ID,
+        amount: BigInt(amount),
+        target: MultiAddress.Id(address),
+      }).decodedCall
+    )
+
+    const batchCall = api.tx.Utility.batch_all({ calls: transfers })
+    batchCall.signAndSubmit(account.polkadotSigner)
       .then(console.log)
   }
 
@@ -170,7 +190,14 @@ const App: React.FC<{ accounts: InjectedPolkadotAccount[] }> = ({ accounts }) =>
           placeholder="Enter amount to send"
         />
       </div>
-
+      <button onClick={addReceiver}>Add to receivers</button>
+      <ul>
+        {receivers.map((receiver, index) => (
+          <li key={index}>
+            {receiver.address} - {receiver.amount}
+          </li>
+        ))}
+      </ul>
       <button onClick={handleTransact}>Transact</button>
     </>
   )
