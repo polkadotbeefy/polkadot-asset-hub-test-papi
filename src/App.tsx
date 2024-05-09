@@ -47,7 +47,7 @@ const ExtensionSelector: React.FC = () => {
   return (
     <div>
       <div>
-        <label>Select Account Provider: </label>
+        <label>Wallet: </label>
         <select
           value={selectedExtension ?? ""}
           onChange={(e) => {
@@ -122,20 +122,7 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
   return (
     <>
       <div>
-        <label>
-          DOT Free Balance:{" "}
-          {wndFreeBalance === null ? "Loading..." : wndFreeBalance.toString()}
-        </label>
-      </div>
-      <div>
-        <label>
-          BEEFY Balance:{" "}
-          {joeBalance === null ? "Loading..." : joeBalance.toString()}
-        </label>
-      </div>
-
-      <div>
-        <label>From: </label>
+        <label>Account: </label>
         <select
           value={account.address}
           onChange={(e) => {
@@ -150,7 +137,19 @@ const App: React.FC<{ accounts: Account[] }> = ({ accounts }) => {
         </select>
       </div>
       <div>
-        <label>To: </label>
+        <label>
+          DOT Free Balance:{" "}
+          {wndFreeBalance === null ? "Loading..." : wndFreeBalance.toString()}
+        </label>
+      </div>
+      <div>
+        <label>
+          BEEFY Balance:{" "}
+          {joeBalance === null ? "Loading..." : joeBalance.toString()}
+        </label>
+      </div>
+      <div>
+        <label>Receiver: </label>
         <input
           type="text"
           value={recipientAddress}
